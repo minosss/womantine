@@ -1,6 +1,6 @@
 import {Menu, MenuTargetProps} from '@mantine/core';
-import React, {forwardRef, cloneElement} from 'react';
-import {isElement, createEventHandler} from '@mantine/utils';
+import {createEventHandler, isElement} from '@mantine/utils';
+import React, {cloneElement, forwardRef} from 'react';
 import {useContextMenuContext} from '../context';
 
 interface RefWrapperProps extends React.PropsWithChildren<{refProp?: string}> {}

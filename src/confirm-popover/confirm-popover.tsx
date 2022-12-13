@@ -10,7 +10,7 @@ import {
 } from '@mantine/core';
 import {useUncontrolled} from '@mantine/hooks';
 import {isElement, createEventHandler} from '@mantine/utils';
-import React from 'react';
+import React, {forwardRef} from 'react';
 
 export interface ConfirmPopoverProps extends PopoverProps {
 	onConfirm?(): void;
@@ -30,7 +30,7 @@ const defaultProps: Partial<ConfirmPopoverProps> = {
 	labels: {cancel: 'Cancel', confirm: 'Confirm'},
 };
 
-export const ConfirmPopover = (props: ConfirmPopoverProps) => {
+export const ConfirmPopover = forwardRef<HTMLDivElement, ConfirmPopoverProps>((props, ref) => {
 	const {
 		title,
 		titleProps,
@@ -70,23 +70,24 @@ export const ConfirmPopover = (props: ConfirmPopoverProps) => {
 	};
 
 	return (
-		<Popover opened={_opened} onChange={setOpened} withArrow withinPortal {...others}>
+		<Popover opened={_opened} onChange={setOpened} withArrow withinPortal {...others} closeOnEscape>
 			<Popover.Target>
 				{React.cloneElement(children, {
 					onClick: createEventHandler(children.props?.onClick, () => {
 						setOpened(true);
 					}),
+					ref,
 				})}
 			</Popover.Target>
 			<Popover.Dropdown>
-				{title && <Text {...titleProps}>{title}</Text>}
+				{title && <Text weight={500} {...titleProps}>{title}</Text>}
 				{description}
 				{(labels.confirm || labels.cancel) && (
 					<Group position='right' mt='xs'>
 						{labels.cancel && (
 							<Button
 								size='xs'
-								variant='outline'
+								variant='subtle'
 								{...cancelProps}
 								onClick={handleCancel}
 							>
@@ -103,4 +104,6 @@ export const ConfirmPopover = (props: ConfirmPopoverProps) => {
 			</Popover.Dropdown>
 		</Popover>
 	);
-};
+});
+
+ConfirmPopover.displayName = 'ConfirmPopover';
