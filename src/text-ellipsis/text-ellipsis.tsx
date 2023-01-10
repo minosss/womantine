@@ -1,4 +1,3 @@
-import React from 'react';
 import {
 	ActionIcon,
 	Box,
@@ -14,9 +13,18 @@ import {CopiedIcon} from './copied-icon';
 import {CopyIcon} from './copy-icon';
 
 interface TextEllipsisProps extends Omit<TextProps, 'children'> {
-	withCopy?: boolean;
 	children?: string;
+
+	/** lineClamp of Text */
+	lineClamp?: number;
+
+	/** enables copy button */
+	withCopy?: boolean;
+
+	/** tooltip of copy button */
 	labels?: Record<'copy' | 'copied', string>;
+
+	/** size of copy button */
 	iconSize?: string | number;
 }
 
@@ -34,13 +42,10 @@ const iconSizes = {
 	xl: 24,
 };
 
-export function createTextEllipsis(lineClamp = 1) {
+export function createTextEllipsis(defaultLineClamp = 1) {
 	function TextEllipsis(props: TextEllipsisProps) {
-		const {children, withCopy, sx, iconSize, labels, ...others} = useComponentDefaultProps(
-			'TextEllipsis',
-			defaultProps,
-			props
-		);
+		const {children, withCopy, sx, iconSize, labels, lineClamp, ...others} =
+			useComponentDefaultProps('TextEllipsis', defaultProps, props);
 
 		const theme = useMantineTheme();
 		const _iconSize = theme.fn.size({size: iconSize, sizes: iconSizes});
@@ -50,7 +55,7 @@ export function createTextEllipsis(lineClamp = 1) {
 				<Text
 					title={typeof children === 'string' ? children : undefined}
 					{...others}
-					lineClamp={lineClamp}
+					lineClamp={lineClamp || defaultLineClamp}
 					component='span'
 					sx={{
 						wordBreak: 'break-word',
@@ -60,7 +65,7 @@ export function createTextEllipsis(lineClamp = 1) {
 				>
 					{children}
 				</Text>
-				{withCopy && children !== undefined && (
+				{withCopy && (
 					<CopyButton value={children}>
 						{({copied, copy}) => (
 							<Tooltip

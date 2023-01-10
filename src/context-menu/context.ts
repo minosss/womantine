@@ -1,9 +1,13 @@
-import {createSafeContext} from '@mantine/utils';
+import React from 'react';
+import {createContext} from '~/utils';
 import {TriggerEvent} from './types';
 
 interface ContextMenuContext {
-	toggleDropdown(): void;
+	lastEventRef: React.MutableRefObject<React.MouseEvent>;
+	toggleDropdown(e: React.MouseEvent): void;
 	trigger?: TriggerEvent;
 }
 
-export const [ContextMenuProvider, useContextMenuContext] = createSafeContext<ContextMenuContext>(`ContextMenuContext is undefined`);
+export const [ContextMenuProvider, useContextMenuContext] = createContext<ContextMenuContext>({
+	name: 'ContextMenuContext',
+});

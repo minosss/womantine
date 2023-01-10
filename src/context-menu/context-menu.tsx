@@ -1,7 +1,7 @@
-import React from 'react';
 import {Menu, PopoverStylesNames} from '@mantine/core';
 import {MenuProps} from '@mantine/core';
 import {useUncontrolled} from '@mantine/hooks';
+import React, {useRef} from 'react';
 import {ContextMenuProvider} from './context';
 import {ContextMenuTarget} from './context-menu-target/context-menu-target';
 import {TriggerEvent} from './types';
@@ -44,13 +44,18 @@ export const ContextMenu = (props: ContextMenuProps) => {
 		!_opened && onOpen?.();
 	};
 
-	const toggleDropdown = () => (_opened ? close() : open());
+	const lastEventRef = useRef<React.MouseEvent | null>(null);
+	const toggleDropdown = (e: React.MouseEvent) => {
+		lastEventRef.current = e;
+		_opened ? close() : open();
+	};
 
 	return (
 		<ContextMenuProvider
 			value={{
 				toggleDropdown,
 				trigger,
+				lastEventRef,
 			}}
 		>
 			<Menu

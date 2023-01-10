@@ -70,7 +70,14 @@ export const ConfirmPopover = forwardRef<HTMLDivElement, ConfirmPopoverProps>((p
 	};
 
 	return (
-		<Popover opened={_opened} onChange={setOpened} withArrow withinPortal {...others} closeOnEscape>
+		<Popover
+			opened={_opened}
+			onChange={setOpened}
+			withArrow
+			withinPortal
+			{...others}
+			closeOnEscape
+		>
 			<Popover.Target>
 				{React.cloneElement(children, {
 					onClick: createEventHandler(children.props?.onClick, () => {
@@ -80,7 +87,11 @@ export const ConfirmPopover = forwardRef<HTMLDivElement, ConfirmPopoverProps>((p
 				})}
 			</Popover.Target>
 			<Popover.Dropdown>
-				{title && <Text weight={500} {...titleProps}>{title}</Text>}
+				{title && (
+					<Text weight={500} {...titleProps}>
+						{title}
+					</Text>
+				)}
 				{description}
 				{(labels.confirm || labels.cancel) && (
 					<Group position='right' mt='xs'>

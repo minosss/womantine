@@ -4,10 +4,13 @@
     "license": "MIT",
     "author": "mino",
     "module": "src/index.ts",
+    "files": [
+        "src"
+    ],
     "dependencies": {
-        "@mantine/core": "^5.9.3",
-        "@mantine/hooks": "^5.9.3",
-        "@mantine/utils": "^5.9.3"
+        "@mantine/core": "^5.10.0",
+        "@mantine/hooks": "^5.10.0",
+        "@mantine/utils": "^5.10.0"
     },
     "devDependencies": {
         "@types/react": "^18.0.26",

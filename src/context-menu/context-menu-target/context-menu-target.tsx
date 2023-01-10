@@ -33,7 +33,7 @@ const RefWrapper: React.FC<RefWrapperProps> = forwardRef<HTMLElement, RefWrapper
 						};
 					},
 				} as any);
-				ctx.toggleDropdown();
+				ctx.toggleDropdown(e);
 			}
 		};
 
